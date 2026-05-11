@@ -2,9 +2,24 @@
 <html>
 <body>
 
-    <h1>검색 결과 페이지</h1>
+<h1>검색 결과</h1>
 
-    <p>입력한 화학식: {{ query }}</p>
+<p>입력한 화학식: {{ query }}</p>
+
+{% if compound %}
+    <p>화합물명: {{ compound.name }}</p>
+    <p>화학식: {{ compound.formula }}</p>
+    <p>분자량: {{ compound.weight }}</p>
+    <p>산/염기성: {{ compound.get_acid_base_type_display }}</p>
+    <p>설명: {{ compound.description }}</p>
+    <p>용도: {{ compound.usage }}</p>
+    <p>주의사항: {{ compound.caution }}</p>
+    <p>위험도: {{ compound.risk_level }}</p>
+{% else %}
+    <p>{{ message }}</p>
+{% endif %}
+
+<a href="/">다시 검색하기</a>
 
 </body>
 </html>
