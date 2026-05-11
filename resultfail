@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Failed</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      overflow:hidden;
+      font-family:'Orbitron', sans-serif;
+      background:
+      radial-gradient(circle at top right,#ead5ff 0%,transparent 28%),
+      radial-gradient(circle at bottom left,#d9efff 0%,transparent 28%),
+      #fffaff;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      padding:35px 45px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .top-logo{
+      position:absolute;
+      top:28px;
+      left:40px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .logo-title{
+      margin:0;
+      line-height:.9;
+      letter-spacing:-1px;
+    }
+
+    .gradient-text{
+      display:block;
+      font-size:34px;
+      font-weight:900;
+      background:linear-gradient(90deg,#0f8fff 0%,#1d7cff 35%,#6c63ff 68%,#b44cf0 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      color:transparent;
+    }
+
+    .atom-logo{
+      position:relative;
+      width:72px;
+      height:72px;
+    }
+
+    .orbit{
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:64px;
+      height:24px;
+      border:3px solid;
+      border-radius:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    .orbit1{
+      border-color:#1695e8;
+      transform:translate(-50%,-50%) rotate(0deg);
+    }
+
+    .orbit2{
+      border-color:#8c39e8;
+      transform:translate(-50%,-50%) rotate(60deg);
+    }
+
+    .orbit3{
+      border-color:#1db2ea;
+      transform:translate(-50%,-50%) rotate(-60deg);
+    }
+
+    .electron{
+      position:absolute;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#0a8fe8,#9b31e7);
+      box-shadow:0 0 10px rgba(147,51,234,.8);
+    }
+
+    .electron1{
+      top:-5px;
+      left:56%;
+    }
+
+    .electron2{
+      bottom:-4px;
+      right:18%;
+    }
+
+    .center-wrap{
+      text-align:center;
+    }
+
+    .main-title{
+      margin:0;
+      font-size:110px;
+      font-weight:900;
+      letter-spacing:5px;
+      background:linear-gradient(90deg,#12a8ff 0%,#388fff 25%,#8660ff 58%,#c04dff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      color:transparent;
+      filter:drop-shadow(0 0 10px rgba(120,120,255,.18));
+    }
+
+    .sub-title{
+      margin:8px 0 55px;
+      font-size:50px;
+      font-weight:900;
+      letter-spacing:6px;
+      color:#b44cf0;
+      text-shadow:0 0 18px rgba(180,76,240,.25);
+    }
+
+    .message-box{
+      margin-bottom:55px;
+    }
+
+    .message-title{
+      font-size:32px;
+      line-height:1.8;
+    }
+
+    .blue{ color:#58abf5; }
+    .purple{ color:#b44cf0; }
+
+    .line{
+      width:480px;
+      max-width:90%;
+      height:4px;
+      margin:28px auto;
+      background:#ead0ff;
+      border-radius:999px;
+    }
+
+    .desc{
+      margin:0;
+      font-size:20px;
+      line-height:2;
+      color:#494468;
+    }
+
+    .button-wrap{
+      display:flex;
+      justify-content:center;
+      gap:24px;
+    }
+
+    .action-btn{
+      width:300px;
+      height:74px;
+      border:none;
+      border-radius:30px;
+      background:white;
+      border:4px solid #c35cff;
+      color:#58abf5;
+      font-size:20px;
+      font-weight:900;
+      font-family:'Orbitron', sans-serif;
+      cursor:pointer;
+      box-shadow:8px 8px 0 rgba(195,92,255,.18);
+      transition:.2s;
+    }
+
+    .action-btn:hover{
+      transform:translateY(-4px);
+    }
+
+    .arrow{
+      color:#b44cf0;
+      margin-right:12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="top-logo">
+      <h1 class="logo-title">
+        <span class="gradient-text">Chemicom</span>
+      </h1>
+
+      <div class="atom-logo">
+        <div class="orbit orbit1">
+          <div class="electron electron1"></div>
+        </div>
+        <div class="orbit orbit2">
+          <div class="electron electron2"></div>
+        </div>
+        <div class="orbit orbit3"></div>
+      </div>
+    </div>
+
+    <div class="center-wrap">
+      <h2 class="main-title">NO RESULT</h2>
+
+      <h3 class="sub-title">SEARCH FAILED</h3>
+
+      <div class="message-box">
+        <div class="message-title">
+          <span class="blue">검색 결과를</span>
+          <span class="purple">찾을 수 없습니다.</span>
+        </div>
+
+        <div class="line"></div>
+
+        <p class="desc">
+          화학 물질 이름 또는 화학식을<br>
+          다시 확인한 후 검색해주세요.
+        </p>
+      </div>
+
+      <div class="button-wrap">
+        <button class="action-btn" onclick="history.back()">
+          <span class="arrow">↩</span>
+          이전으로 돌아가기
+        </button>
+
+        <button class="action-btn" onclick="location.href='index.html'">
+          <span class="arrow">⌂</span>
+          홈으로 돌아가기
+        </button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
