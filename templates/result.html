@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+</head>
 <body>
 
 <h1>검색 결과</h1>
 
-<p>입력한 화학식: {{ query }}</p>
+<p>입력한 검색어: {{ query }}</p>
 
 {% if compound %}
-    <p>화합물명: {{ compound.name }}</p>
-    <p>화학식: {{ compound.formula }}</p>
-    <p>분자량: {{ compound.weight }}</p>
-    <p>산/염기성: {{ compound.get_acid_base_type_display }}</p>
-    <p>설명: {{ compound.description }}</p>
-    <p>용도: {{ compound.usage }}</p>
-    <p>주의사항: {{ compound.caution }}</p>
-    <p>위험도: {{ compound.risk_level }}</p>
+    <hr>
+    <h2>{{ compound.name }}</h2>
+    <p><strong>분류:</strong> 화합물</p>
+    <p><strong>화학식:</strong> {{ compound.formula }}</p>
+    <p><strong>분자량:</strong> {{ compound.weight }}</p>
+    <p><strong>산/염기 구분:</strong> {{ compound.get_acid_base_type_display }}</p>
+    <p><strong>설명:</strong> {{ compound.description|default:"등록된 설명이 없습니다." }}</p>
+    <p><strong>활용 예시:</strong> {{ compound.usage|default:"등록된 활용 예시가 없습니다." }}</p>
+    <p><strong>주의사항:</strong> {{ compound.caution|default:"등록된 주의사항이 없습니다." }}</p>
+    <p><strong>위험도:</strong> {{ compound.risk_level }}</p>
+
+{% elif element %}
+    <hr>
+    <h2>{{ element.name }}</h2>
+    <p><strong>분류:</strong> 원소</p>
+    <p><strong>원소 기호:</strong> {{ element.symbol }}</p>
+    <p><strong>원자 번호:</strong> {{ element.atomic_number }}</p>
+    <p><strong>원자량:</strong> {{ element.weight }}</p>
+    <p><strong>설명:</strong> {{ element.description|default:"등록된 설명이 없습니다." }}</p>
+
 {% else %}
+    <hr>
     <p>{{ message }}</p>
+    <p>입력값을 다시 확인하거나 다른 화학식을 입력해보세요.</p>
 {% endif %}
 
+<br>
 <a href="/">다시 검색하기</a>
 
 </body>
