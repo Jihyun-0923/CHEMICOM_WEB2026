@@ -3,41 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChemScope</title>
+
+  <title>Chemicom</title>
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- 로고 아이콘 -->
+  <script src="https://kit.fontawesome.com/a2d9d6a64f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-  <nav>
-    <h1>ChemScope</h1>
-    <ul>
-      <li>홈</li>
-      <li>학습</li>
-      <li>소개</li>
-    </ul>
-  </nav>
+  <!-- 헤더 -->
+  <header>
 
-  <section class="main">
-    <h2>화학식을 쉽게 이해해보세요</h2>
+    <div class="logo-wrap">
+
+  <div class="logo-text">
+    Chemicom
+  </div>
+
+<div class="atom-logo">
+  <div class="ellipse e1"></div>
+  <div class="ellipse e2"></div>
+  <div class="ellipse e3"></div>
+
+  <div class="electron d1"></div>
+  <div class="electron d2"></div>
+</div>
+
+</div>
+    <nav>
+      <a href="#">홈</a>
+      <a href="#">소개</a>
+    </nav>
+
+  </header>
+
+  <!-- 메인 -->
+  <section class="hero">
+
+    <h1>화학식을 쉽게 이해해보세요</h1>
 
     <p>
-      화학식이나 화학명을 입력하면<br>
-      물질의 특징과 정보를 쉽게 알려드립니다.
+      화학식이나 구조식을 입력하면<br>
+      물질의 특징과 활용 정보를 쉽게 알려드립니다.
     </p>
 
+    <!-- 검색창 -->
     <div class="search-box">
-      <input type="text" placeholder="H2O, NaCl, C2H5OH">
-      <button>검색</button>
+
+      <div class="search-left">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          type="text"
+          placeholder="H2O, NaCl, C2H5OH 등을 입력하세요"
+        >
+
+      </div>
+
+      <button class="search-btn">
+        검색
+      </button>
+
     </div>
 
+    <!-- 예시 검색 -->
     <div class="example">
-      <span>H2O</span>
-      <span>NaCl</span>
-      <span>CO2</span>
-      <span>C2H5OH</span>
+
+      <div class="example-title">
+        예시 검색
+      </div>
+
+      <div class="chips">
+
+        <div class="chip">H2O</div>
+        <div class="chip">CO2</div>
+        <div class="chip">NaCl</div>
+        <div class="chip">C2H5OH</div>
+
+      </div>
+
     </div>
+
   </section>
+
+  <footer>
+    © 2024 Chemicom. All rights reserved.
+  </footer>
 
 </body>
 </html>
