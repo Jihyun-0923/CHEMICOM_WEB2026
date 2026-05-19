@@ -1,15 +1,300 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>화합물 검색</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemicom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9d6a64f.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef4ff 0%, #f5f1ff 100%);
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      padding: 24px 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-size: 38px;
+      font-weight: 700;
+      color: #2f6df6;
+      letter-spacing: -1px;
+    }
+
+    .atom-logo {
+      position: relative;
+      width: 46px;
+      height: 46px;
+    }
+
+    .ellipse {
+      position: absolute;
+      width: 42px;
+      height: 18px;
+      border: 3px solid #42a5ff;
+      border-radius: 50%;
+      top: 13px;
+      left: 2px;
+    }
+
+    .e1 { transform: rotate(0deg); }
+    .e2 {
+      transform: rotate(60deg);
+      border-color: #6a4cff;
+    }
+    .e3 { transform: rotate(-60deg); }
+
+    .electron {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .d1 {
+      background: #5b43ff;
+      top: 9px;
+      left: 24px;
+    }
+
+    .d2 {
+      background: #2c8fff;
+      bottom: 9px;
+      left: 13px;
+    }
+
+    nav {
+      display: flex;
+      gap: 48px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .hero {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 55px;
+      padding: 0 24px 80px;
+    }
+
+    .hero h1 {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(90deg, #2d83ff, #8d47ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      margin-top: 24px;
+      font-size: 22px;
+      line-height: 1.7;
+      color: #4b5678;
+      font-weight: 500;
+    }
+
+    .search-box {
+      margin-top: 50px;
+      width: 74%;
+      max-width: 1200px;
+      min-height: 88px;
+      background: white;
+      border: 0;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 18px 13px 34px;
+      box-shadow: 0 12px 35px rgba(120, 120, 255, 0.08);
+    }
+
+    .search-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .search-left i {
+      font-size: 32px;
+      color: #8f96b7;
+    }
+
+    .search-left input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 24px;
+      color: #5b6280;
+      background: transparent;
+    }
+
+    .search-left input::placeholder {
+      color: #b0b7d1;
+    }
+
+    .search-btn {
+      width: 165px;
+      height: 62px;
+      border: none;
+      border-radius: 40px;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(90deg, #5d9cff, #8b45ff);
+      box-shadow: 0 10px 25px rgba(120, 80, 255, 0.22);
+    }
+
+    .example {
+      margin-top: 50px;
+    }
+
+    .example-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #7b52ff;
+      margin-bottom: 22px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 14px 30px;
+      background: white;
+      border: 0;
+      border-radius: 40px;
+      color: #6a5cff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(120, 120, 255, 0.06);
+    }
+
+    @media (max-width: 760px) {
+      header {
+        padding: 22px 24px;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      .hero {
+        margin-top: 36px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .search-box {
+        width: 100%;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .search-left input {
+        font-size: 18px;
+      }
+
+      .search-btn {
+        width: 112px;
+        height: 52px;
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>화합물 검색</h1>
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-text">Chemicom</div>
+      <div class="atom-logo" aria-hidden="true">
+        <div class="ellipse e1"></div>
+        <div class="ellipse e2"></div>
+        <div class="ellipse e3"></div>
+        <div class="electron d1"></div>
+        <div class="electron d2"></div>
+      </div>
+    </div>
+    <nav>
+      <a href="{% url 'home' %}">홈</a>
+      <a href="#">소개</a>
+    </nav>
+  </header>
 
-    <form action="/result/" method="GET">
-        <input type="text" name="query" placeholder="화합물명 또는 화학식 입력">
-        <button type="submit">검색</button>
+  <section class="hero">
+    <h1>화학식을 쉽게 이해해보세요</h1>
+    <p>
+      화학식이나 구조식을 입력하면<br>
+      물질의 특징과 사용 정보를 쉽게 알려드립니다.
+    </p>
+
+    <form class="search-box" action="{% url 'result' %}" method="get">
+      <div class="search-left">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input
+          type="text"
+          name="query"
+          placeholder="H2O, NaCl, C2H5OH 등을 입력하세요"
+          autocomplete="off"
+          required
+        >
+      </div>
+      <button class="search-btn" type="submit">검색</button>
     </form>
+
+    <div class="example">
+      <div class="example-title">예시 검색</div>
+      <form class="chips" action="{% url 'result' %}" method="get">
+        <button class="chip" type="submit" name="query" value="H2O">H2O</button>
+        <button class="chip" type="submit" name="query" value="CO2">CO2</button>
+        <button class="chip" type="submit" name="query" value="NaCl">NaCl</button>
+        <button class="chip" type="submit" name="query" value="C2H5OH">C2H5OH</button>
+      </form>
+    </div>
+  </section>
 </body>
 </html>
