@@ -7,6 +7,10 @@ def home(request):
     return render(request, 'home.html')
 
 
+def about(request):
+    return render(request, 'about.html')
+
+
 def result(request):
     query = request.GET.get('query', '').strip()
 

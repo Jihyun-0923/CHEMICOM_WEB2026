@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from compounds.views import home, result
+from compounds.views import about, home, result
 
 
 
@@ -24,6 +24,7 @@ from compounds.views import home, result
 
 urlpatterns = [
     path('', home, name='home'),
+    path('about/', about, name='about'),
     path('result/', result, name='result'),
     path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
