@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemicom - 검색 결과</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Orbitron', sans-serif;
+      background: #f0f0fa;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 35px 45px 60px;
+      position: relative;
+    }
+
+    .top-header {
+      position: absolute;
+      top: 28px;
+      left: 40px;
+      right: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .top-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-title {
+      margin: 0;
+      line-height: .9;
+      letter-spacing: -1px;
+    }
+
+    .logo-text {
+      display: block;
+      font-size: 34px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #0f8fff 0%, #1d7cff 35%, #6c63ff 68%, #b44cf0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .atom-logo {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    .orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 64px;
+      height: 24px;
+      border: 3px solid;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit1 {
+      border-color: #1695e8;
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .orbit2 {
+      border-color: #8c39e8;
+      transform: translate(-50%, -50%) rotate(60deg);
+    }
+
+    .orbit3 {
+      border-color: #1db2ea;
+      transform: translate(-50%, -50%) rotate(-60deg);
+    }
+
+    .electron {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0a8fe8, #9b31e7);
+      box-shadow: 0 0 10px rgba(147, 51, 234, .8);
+    }
+
+    .electron1 {
+      top: -5px;
+      left: 56%;
+    }
+
+    .electron2 {
+      bottom: -4px;
+      right: 18%;
+    }
+
+    .top-nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-link:hover {
+      color: #6c63ff;
+    }
+
+    .search-section {
+      text-align: center;
+      margin-top: 130px;
+      margin-bottom: 40px;
+    }
+
+    .search-title {
+      margin-bottom: 15px;
+      font-size: 45px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, #5b8fff 0%, #6e6bff 50%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .search-sub {
+      margin-bottom: 35px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .search-box-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 860px;
+      margin: 0 auto 30px;
+      background: #fff;
+      padding: 6px 8px 6px 35px;
+      border-radius: 50px;
+      box-shadow: 0 12px 35px rgba(147, 51, 234, .07);
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      font-size: 18px;
+      color: #333;
+      outline: none;
+      background: transparent;
+      min-width: 0;
+    }
+
+    .search-input::placeholder {
+      color: #bcaedc;
+    }
+
+    .search-btn {
+      padding: 0 45px;
+      height: 58px;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(90deg, #5177ff, #9247ff);
+      color: white;
+      font-size: 19px;
+      font-weight: 900;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(108, 99, 255, .2);
+    }
+
+    .tags-label {
+      margin-bottom: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #7d5fff;
+    }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 10px 26px;
+      background: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      color: #5c4eff;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(147, 51, 234, .06);
+    }
+
+    .divider {
+      width: 1100px;
+      max-width: 95%;
+      margin: 45px auto;
+      border: none;
+      border-top: 2px dashed #e2d5f3;
+    }
+
+    .result-title {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .result-text {
+      display: block;
+      font-size: 45px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, #12a8ff 0%, #388fff 25%, #8660ff 58%, #c04dff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .searched-name {
+      margin: 0 0 50px;
+      text-align: center;
+      font-size: 88px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      color: #8e37e8;
+      text-shadow: 0 6px 20px rgba(142, 55, 232, .15);
+    }
+
+    .latex-panel {
+      width: 860px;
+      max-width: 95%;
+      margin: -28px auto 38px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .latex-btn {
+      border: none;
+      border-radius: 30px;
+      padding: 13px 28px;
+      background: linear-gradient(90deg, #0b90e8, #8e37e8);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(108, 99, 255, .18);
+    }
+
+    .latex-output {
+      max-width: 100%;
+      padding-right: 4px;
+      color: #5c4eff;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .latex-code-row {
+      display: none;
+      flex-basis: 100%;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .latex-code-row.is-visible {
+      display: flex;
+    }
+
+    .latex-code-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px 10px 10px 18px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(147, 51, 234, .08);
+    }
+
+    .latex-copy-btn {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 12px;
+      background: #f7f7ff;
+      color: #5c4eff;
+      cursor: pointer;
+      flex: 0 0 auto;
+      transition: background .2s, color .2s, transform .2s;
+    }
+
+    .latex-copy-btn:hover {
+      background: #eceaff;
+      transform: translateY(-1px);
+    }
+
+    .latex-copy-btn.is-copied {
+      background: #e8fff0;
+      color: #30a952;
+    }
+
+    .copy-icon,
+    .copy-icon::after {
+      position: absolute;
+      width: 14px;
+      height: 17px;
+      border: 2px solid currentColor;
+      border-radius: 4px;
+      content: "";
+    }
+
+    .copy-icon {
+      top: 9px;
+      left: 8px;
+    }
+
+    .copy-icon::after {
+      top: -5px;
+      left: 5px;
+      background: #f7f7ff;
+    }
+
+    .latex-copy-btn:hover .copy-icon::after {
+      background: #eceaff;
+    }
+
+    .latex-copy-btn.is-copied .copy-icon::after {
+      background: #e8fff0;
+    }
+
+    .latex-help {
+      flex-basis: 100%;
+      margin: -2px 0 0;
+      color: #8a8a95;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .molecule-panel {
+      width: 520px;
+      max-width: 95%;
+      margin: 0 auto 42px;
+      padding: 18px;
+      border: 3px dashed #d39cff;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .78);
+      box-shadow: 0 0 24px rgba(147, 51, 234, .08);
+    }
+
+    .molecule-title {
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #8e37e8;
+    }
+
+    .molecule-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .molecule-bond {
+      stroke: #c9b8ef;
+      stroke-width: 5;
+      stroke-linecap: round;
+    }
+
+    .molecule-atom {
+      stroke: rgba(255, 255, 255, .95);
+      stroke-width: 5;
+      filter: drop-shadow(0 8px 14px rgba(108, 99, 255, .18));
+    }
+
+    .molecule-symbol {
+      fill: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
+    .molecule-count {
+      fill: #5c4eff;
+      font-size: 15px;
+      font-weight: 900;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
+    .content {
+      width: 1100px;
+      max-width: 95%;
+      margin: 0 auto;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      padding: 45px 50px;
+      background: rgba(255, 255, 255, .74);
+      border: 3px dashed #d39cff;
+      border-radius: 30px;
+      box-shadow: 0 0 24px rgba(147, 51, 234, .08);
+    }
+
+    .mini-risk-badge {
+      position: absolute;
+      top: 45px;
+      right: 50px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .9);
+      padding: 7px 14px;
+      border-radius: 16px;
+      border: 2px solid #e2d5f3;
+      flex-shrink: 0;
+    }
+
+    .risk-label {
+      font-size: 14px;
+      font-weight: 900;
+      color: #9839e9;
+    }
+
+    .risk-level-box {
+      font-size: 19px;
+      font-weight: 900;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 8px;
+      line-height: 1;
+      min-width: 52px;
+      text-align: center;
+    }
+
+    .risk-low {
+      background: #30d158;
+    }
+
+    .risk-mid {
+      background: #ffd60a;
+    }
+
+    .risk-high {
+      background: #d72626;
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 45px;
+      padding-right: 180px;
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-block;
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #8e37e8, #0b90e8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .result-type {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0b90e8;
+    }
+
+    .underline {
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #8e37e8, #0b90e8);
+    }
+
+    .info-line {
+      margin: 28px 0;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.6;
+      color: #8f37e8;
+      word-break: keep-all;
+    }
+
+    .info-line span {
+      color: #0a90e8;
+    }
+
+    .home-link {
+      display: block;
+      width: fit-content;
+      margin: 36px auto 0;
+      padding: 13px 30px;
+      border-radius: 30px;
+      background: #fff;
+      color: #5c4eff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 6px 20px rgba(147, 51, 234, .08);
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        padding: 28px 20px 48px;
+      }
+
+      .top-header {
+        position: static;
+      }
+
+      .top-nav {
+        gap: 18px;
+      }
+
+      .search-section {
+        margin-top: 54px;
+      }
+
+      .search-title {
+        font-size: 34px;
+      }
+
+      .search-box-wrap {
+        padding-left: 22px;
+      }
+
+      .search-btn {
+        padding: 0 24px;
+      }
+
+      .searched-name {
+        font-size: 48px;
+      }
+
+      .latex-panel {
+        margin-top: -22px;
+      }
+
+      .card {
+        padding: 34px 28px;
+      }
+
+      .mini-risk-badge {
+        top: 34px;
+        right: 28px;
+      }
+
+      .result-head {
+        margin-bottom: 34px;
+        flex-wrap: wrap;
+        padding-right: 150px;
+      }
+
+      .section-title {
+        font-size: 30px;
+      }
+
+      .result-type,
+      .info-line {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top-header">
+      <div class="top-logo">
+        <h1 class="logo-title"><span class="logo-text">Chemicom</span></h1>
+        <div class="atom-logo" aria-hidden="true">
+          <div class="orbit orbit1"><div class="electron electron1"></div></div>
+          <div class="orbit orbit2"><div class="electron electron2"></div></div>
+          <div class="orbit orbit3"></div>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a class="nav-link" href="{% url 'home' %}">홈</a>
+        <a class="nav-link" href="{% url 'about' %}">소개</a>
+      </nav>
+    </header>
+
+    <section class="search-section">
+      <div class="search-title">화학식을 쉽게 이해해보세요</div>
+      <div class="search-sub">화학식이나 구조식을 입력하면<br>물질의 특징과 사용 정보를 쉽게 알려드립니다.</div>
+      <form class="search-box-wrap" action="{% url 'result' %}" method="get">
+        <input
+          type="text"
+          class="search-input"
+          name="query"
+          value="{{ query }}"
+          placeholder="H2O, NaCl, C2H5OH 등을 입력하세요"
+          autocomplete="off"
+          required
+        >
+        <button class="search-btn" type="submit">검색</button>
+      </form>
+      <div class="tags-label">예시 검색</div>
+      <form class="tags" action="{% url 'result' %}" method="get">
+        <button class="tag" type="submit" name="query" value="H2O">H2O</button>
+        <button class="tag" type="submit" name="query" value="CO2">CO2</button>
+        <button class="tag" type="submit" name="query" value="NaCl">NaCl</button>
+        <button class="tag" type="submit" name="query" value="C2H5OH">C2H5OH</button>
+      </form>
+    </section>
+
+    <hr class="divider">
+
+    {% if compound or element %}
+      <div class="result-title"><span class="result-text">Result</span></div>
+      <div class="searched-name">
+        {% if compound %}
+          {{ compound.name }} ({{ compound.formula }})
+        {% else %}
+          {{ element.name }} ({{ element.symbol }})
+        {% endif %}
+      </div>
+
+      {% if latex_formula %}
+        <div class="latex-panel">
+          <button
+            class="latex-btn"
+            type="button"
+            id="latex-button"
+            data-default-text="LaTeX 변환"
+            data-copied-text="복사 완료!"
+          >
+            LaTeX 변환
+          </button>
+          <p class="latex-help">아래 LaTeX 코드를 복사해서 필요한 곳에 붙여넣으면 됩니다.</p>
+          <div class="latex-code-row" id="latex-code-row">
+            <div class="latex-code-box">
+              <code class="latex-output" id="latex-output">{{ latex_formula }}</code>
+              <button
+                class="latex-copy-btn"
+                type="button"
+                id="latex-copy-button"
+                aria-label="LaTeX 코드 복사"
+                title="LaTeX 코드 복사"
+                data-default-text="LaTeX 코드 복사"
+                data-copied-text="복사 완료"
+              >
+                <span class="copy-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if molecule_visual.nodes %}
+        <div class="molecule-panel">
+          {% if compound %}
+            <div class="molecule-title">분자 구조</div>
+            <svg class="molecule-svg" viewBox="0 0 360 300" role="img" aria-label="분자 구조">
+          {% else %}
+            <div class="molecule-title">원자 구조</div>
+            <svg class="molecule-svg" viewBox="0 0 360 300" role="img" aria-label="원자 구조">
+          {% endif %}
+            {% for bond in molecule_visual.bonds %}
+              <line
+                class="molecule-bond"
+                x1="{{ bond.x1 }}"
+                y1="{{ bond.y1 }}"
+                x2="{{ bond.x2 }}"
+                y2="{{ bond.y2 }}"
+              />
+            {% endfor %}
+
+            {% for node in molecule_visual.nodes %}
+              <circle
+                class="molecule-atom"
+                cx="{{ node.x }}"
+                cy="{{ node.y }}"
+                r="{{ node.r }}"
+                fill="{{ node.color }}"
+              />
+              <text class="molecule-symbol" x="{{ node.x }}" y="{{ node.y }}">{{ node.symbol }}</text>
+              {% if node.count %}
+                <circle cx="{{ node.badge_x }}" cy="{{ node.badge_y }}" r="14" fill="#fff" />
+                <text class="molecule-count" x="{{ node.badge_x }}" y="{{ node.badge_y }}">{{ node.count }}</text>
+              {% endif %}
+            {% endfor %}
+          </svg>
+        </div>
+      {% endif %}
+
+      <main class="content">
+        {% if compound %}
+          <div class="card">
+            <div class="result-head">
+              <div class="section-title">화학식 정보<div class="underline"></div></div>
+              <div class="result-type">{{ compound.get_acid_base_type_display }} 물질</div>
+              <div class="mini-risk-badge">
+                <span class="risk-label">위험도</span>
+                <span class="risk-level-box {{ risk_class }}">Lv.{{ risk_level }}</span>
+              </div>
+            </div>
+
+            <p class="info-line">설명 : <span>{{ compound.description|default:"등록된 설명이 없습니다." }}</span></p>
+            <p class="info-line">사용 예시 : <span>{{ compound.usage|default:"등록된 사용 예시가 없습니다." }}</span></p>
+            <p class="info-line">주의 사항 : <span>{{ compound.caution|default:"등록된 주의 사항이 없습니다." }}</span></p>
+            <p class="info-line">분자량 : <span>{{ compound.weight }} g/mol</span></p>
+            <p class="info-line">
+              구성 원소 :
+              <span>
+                {% for item in related_elements %}
+                  {{ item.name }}({{ item.symbol }}){% if not forloop.last %}, {% endif %}
+                {% empty %}
+                  등록된 정보가 없습니다.
+                {% endfor %}
+              </span>
+            </p>
+          </div>
+        {% else %}
+          <div class="card">
+            <div class="result-head">
+              <div class="section-title">원소 정보<div class="underline"></div></div>
+              <div class="mini-risk-badge">
+                <span class="risk-label">위험도</span>
+                <span class="risk-level-box risk-low">Lv.1</span>
+              </div>
+            </div>
+
+            <p class="info-line">원자 설명 : <span>{{ element.description|default:"등록된 설명이 없습니다." }}</span></p>
+            <p class="info-line">원소 기호 : <span>{{ element.symbol }}</span></p>
+            <p class="info-line">원자 번호 : <span>{{ element.atomic_number }}</span></p>
+            <p class="info-line">원자량 : <span>{{ element.weight }} g/mol</span></p>
+          </div>
+        {% endif %}
+      </main>
+    {% else %}
+      <div class="result-title"><span class="result-text">Result</span></div>
+      <div class="searched-name">NO RESULT</div>
+
+      <main class="content">
+        <div class="card">
+          <div class="result-head">
+            <div class="section-title">검색 실패<div class="underline"></div></div>
+          </div>
+          <p class="info-line">안내 : <span>{{ message|default:"검색 결과를 찾을 수 없습니다." }}</span></p>
+          <p class="info-line">입력한 검색어 : <span>{{ query|default:"없음" }}</span></p>
+          <p class="info-line">참고 사항 : <span>화학 물질 이름, 화학식, 원소명 또는 원소 기호를 다시 확인해주세요.</span></p>
+        </div>
+      </main>
+    {% endif %}
+
+    <a class="home-link" href="{% url 'home' %}">홈으로 돌아가기</a>
+  </div>
+  <script>
+    const latexButton = document.getElementById('latex-button');
+    const latexCodeRow = document.getElementById('latex-code-row');
+    const latexOutput = document.getElementById('latex-output');
+    const latexCopyButton = document.getElementById('latex-copy-button');
+
+    async function copyTextToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          // Fall through to the textarea method for browsers that block Clipboard API.
+        }
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+
+      let copied = false;
+      try {
+        copied = document.execCommand('copy');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+
+      return copied;
+    }
+
+    async function copyLatexCode(button) {
+      const copied = await copyTextToClipboard(latexOutput.textContent.trim());
+
+      if (copied) {
+        button.classList.add('is-copied');
+        button.setAttribute('aria-label', button.dataset.copiedText);
+        button.setAttribute('title', button.dataset.copiedText);
+        window.setTimeout(() => {
+          button.classList.remove('is-copied');
+          button.setAttribute('aria-label', button.dataset.defaultText);
+          button.setAttribute('title', button.dataset.defaultText);
+        }, 1400);
+        return;
+      }
+
+      latexOutput.focus();
+      window.getSelection().selectAllChildren(latexOutput);
+      button.setAttribute('aria-label', '코드를 선택했어요. Ctrl+C를 눌러 복사하세요.');
+      button.setAttribute('title', '코드를 선택했어요. Ctrl+C를 눌러 복사하세요.');
+      window.setTimeout(() => {
+        button.setAttribute('aria-label', button.dataset.defaultText);
+        button.setAttribute('title', button.dataset.defaultText);
+      }, 1800);
+    }
+
+    if (latexButton && latexCodeRow && latexOutput && latexCopyButton) {
+      latexButton.addEventListener('click', () => {
+        latexCodeRow.classList.add('is-visible');
+      });
+
+      latexCopyButton.addEventListener('click', () => {
+        copyLatexCode(latexCopyButton);
+      });
+    }
+  </script>
+</body>
+</html>
