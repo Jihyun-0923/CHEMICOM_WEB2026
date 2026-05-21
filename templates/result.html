@@ -250,6 +250,182 @@
       text-shadow: 0 6px 20px rgba(142, 55, 232, .15);
     }
 
+    .latex-panel {
+      width: 860px;
+      max-width: 95%;
+      margin: -28px auto 38px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .latex-btn {
+      border: none;
+      border-radius: 30px;
+      padding: 13px 28px;
+      background: linear-gradient(90deg, #0b90e8, #8e37e8);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(108, 99, 255, .18);
+    }
+
+    .latex-output {
+      max-width: 100%;
+      padding-right: 4px;
+      color: #5c4eff;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .latex-code-row {
+      display: none;
+      flex-basis: 100%;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .latex-code-row.is-visible {
+      display: flex;
+    }
+
+    .latex-code-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px 10px 10px 18px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(147, 51, 234, .08);
+    }
+
+    .latex-copy-btn {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 12px;
+      background: #f7f7ff;
+      color: #5c4eff;
+      cursor: pointer;
+      flex: 0 0 auto;
+      transition: background .2s, color .2s, transform .2s;
+    }
+
+    .latex-copy-btn:hover {
+      background: #eceaff;
+      transform: translateY(-1px);
+    }
+
+    .latex-copy-btn.is-copied {
+      background: #e8fff0;
+      color: #30a952;
+    }
+
+    .copy-icon,
+    .copy-icon::after {
+      position: absolute;
+      width: 14px;
+      height: 17px;
+      border: 2px solid currentColor;
+      border-radius: 4px;
+      content: "";
+    }
+
+    .copy-icon {
+      top: 9px;
+      left: 8px;
+    }
+
+    .copy-icon::after {
+      top: -5px;
+      left: 5px;
+      background: #f7f7ff;
+    }
+
+    .latex-copy-btn:hover .copy-icon::after {
+      background: #eceaff;
+    }
+
+    .latex-copy-btn.is-copied .copy-icon::after {
+      background: #e8fff0;
+    }
+
+    .latex-help {
+      flex-basis: 100%;
+      margin: -2px 0 0;
+      color: #8a8a95;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .molecule-panel {
+      width: 520px;
+      max-width: 95%;
+      margin: 0 auto 42px;
+      padding: 18px;
+      border: 3px dashed #d39cff;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .78);
+      box-shadow: 0 0 24px rgba(147, 51, 234, .08);
+    }
+
+    .molecule-title {
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #8e37e8;
+    }
+
+    .molecule-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .molecule-bond {
+      stroke: #c9b8ef;
+      stroke-width: 5;
+      stroke-linecap: round;
+    }
+
+    .molecule-atom {
+      stroke: rgba(255, 255, 255, .95);
+      stroke-width: 5;
+      filter: drop-shadow(0 8px 14px rgba(108, 99, 255, .18));
+    }
+
+    .molecule-symbol {
+      fill: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
+    .molecule-count {
+      fill: #5c4eff;
+      font-size: 15px;
+      font-weight: 900;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
     .content {
       width: 1100px;
       max-width: 95%;
@@ -404,6 +580,10 @@
         font-size: 48px;
       }
 
+      .latex-panel {
+        margin-top: -22px;
+      }
+
       .card {
         padding: 34px 28px;
       }
@@ -483,6 +663,74 @@
         {% endif %}
       </div>
 
+      {% if latex_formula %}
+        <div class="latex-panel">
+          <button
+            class="latex-btn"
+            type="button"
+            id="latex-button"
+            data-default-text="LaTeX 변환"
+            data-copied-text="복사 완료!"
+          >
+            LaTeX 변환
+          </button>
+          <p class="latex-help">아래 LaTeX 코드를 복사해서 필요한 곳에 붙여넣으면 됩니다.</p>
+          <div class="latex-code-row" id="latex-code-row">
+            <div class="latex-code-box">
+              <code class="latex-output" id="latex-output">{{ latex_formula }}</code>
+              <button
+                class="latex-copy-btn"
+                type="button"
+                id="latex-copy-button"
+                aria-label="LaTeX 코드 복사"
+                title="LaTeX 코드 복사"
+                data-default-text="LaTeX 코드 복사"
+                data-copied-text="복사 완료"
+              >
+                <span class="copy-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if molecule_visual.nodes %}
+        <div class="molecule-panel">
+          {% if compound %}
+            <div class="molecule-title">분자 구조</div>
+            <svg class="molecule-svg" viewBox="0 0 360 300" role="img" aria-label="분자 구조">
+          {% else %}
+            <div class="molecule-title">원자 구조</div>
+            <svg class="molecule-svg" viewBox="0 0 360 300" role="img" aria-label="원자 구조">
+          {% endif %}
+            {% for bond in molecule_visual.bonds %}
+              <line
+                class="molecule-bond"
+                x1="{{ bond.x1 }}"
+                y1="{{ bond.y1 }}"
+                x2="{{ bond.x2 }}"
+                y2="{{ bond.y2 }}"
+              />
+            {% endfor %}
+
+            {% for node in molecule_visual.nodes %}
+              <circle
+                class="molecule-atom"
+                cx="{{ node.x }}"
+                cy="{{ node.y }}"
+                r="{{ node.r }}"
+                fill="{{ node.color }}"
+              />
+              <text class="molecule-symbol" x="{{ node.x }}" y="{{ node.y }}">{{ node.symbol }}</text>
+              {% if node.count %}
+                <circle cx="{{ node.badge_x }}" cy="{{ node.badge_y }}" r="14" fill="#fff" />
+                <text class="molecule-count" x="{{ node.badge_x }}" y="{{ node.badge_y }}">{{ node.count }}</text>
+              {% endif %}
+            {% endfor %}
+          </svg>
+        </div>
+      {% endif %}
+
       <main class="content">
         {% if compound %}
           <div class="card">
@@ -545,5 +793,77 @@
 
     <a class="home-link" href="{% url 'home' %}">홈으로 돌아가기</a>
   </div>
+  <script>
+    const latexButton = document.getElementById('latex-button');
+    const latexCodeRow = document.getElementById('latex-code-row');
+    const latexOutput = document.getElementById('latex-output');
+    const latexCopyButton = document.getElementById('latex-copy-button');
+
+    async function copyTextToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          // Fall through to the textarea method for browsers that block Clipboard API.
+        }
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+
+      let copied = false;
+      try {
+        copied = document.execCommand('copy');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+
+      return copied;
+    }
+
+    async function copyLatexCode(button) {
+      const copied = await copyTextToClipboard(latexOutput.textContent.trim());
+
+      if (copied) {
+        button.classList.add('is-copied');
+        button.setAttribute('aria-label', button.dataset.copiedText);
+        button.setAttribute('title', button.dataset.copiedText);
+        window.setTimeout(() => {
+          button.classList.remove('is-copied');
+          button.setAttribute('aria-label', button.dataset.defaultText);
+          button.setAttribute('title', button.dataset.defaultText);
+        }, 1400);
+        return;
+      }
+
+      latexOutput.focus();
+      window.getSelection().selectAllChildren(latexOutput);
+      button.setAttribute('aria-label', '코드를 선택했어요. Ctrl+C를 눌러 복사하세요.');
+      button.setAttribute('title', '코드를 선택했어요. Ctrl+C를 눌러 복사하세요.');
+      window.setTimeout(() => {
+        button.setAttribute('aria-label', button.dataset.defaultText);
+        button.setAttribute('title', button.dataset.defaultText);
+      }, 1800);
+    }
+
+    if (latexButton && latexCodeRow && latexOutput && latexCopyButton) {
+      latexButton.addEventListener('click', () => {
+        latexCodeRow.classList.add('is-visible');
+      });
+
+      latexCopyButton.addEventListener('click', () => {
+        copyLatexCode(latexCopyButton);
+      });
+    }
+  </script>
 </body>
 </html>
