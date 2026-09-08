@@ -28,7 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "nexus.onrender.com",
+    "chemicom2026-nexus.onrender.com",
 ]
 
 
