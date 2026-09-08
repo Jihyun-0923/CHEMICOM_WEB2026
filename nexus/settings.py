@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "chemicom2026-nexus.onrender.com",
+    ".onrender.com",
 ]
 
 
